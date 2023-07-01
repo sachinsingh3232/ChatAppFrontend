@@ -6,6 +6,7 @@ import ChatLoading from './ChatLoading';
 import { AddIcon } from '@chakra-ui/icons';
 import { getSender } from '../Config/ChatLogics';
 import GroupChatModal from './Miscellaneous/GroupChatModal';
+const BASE_URL  =process.env.REACT_APP_API_URL;
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -22,11 +23,11 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get("http://localhost:5000/chatApp/chat", config);
+      const { data } = await axios.get(`${BASE_URL}/chatApp/chat`, config);
       // console.log(data)
       setChats(data);
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       toast({
         title: "Error Occured!",
         description: "Failed to Load the chats",

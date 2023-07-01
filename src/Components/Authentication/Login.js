@@ -7,6 +7,8 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL  =process.env.REACT_APP_API_URL;
+
 const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -31,23 +33,23 @@ const Login = () => {
       return;
     }
 
-    // console.log(email, password);
     try {
+      // console.log(BASE_URL);
 
       const { data } = await axios.post(
-        "http://localhost:5000/chatApp/user/login",
+        `${BASE_URL}/chatApp/user/login`,
         { email, password },
         {
           headers: {
             "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Credentials": true,
-            // withCredentials: true,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            withCredentials: true,
           },
         }
       );
 
-      console.log(JSON.stringify(data));
+      // console.log(JSON.stringify(data));
       toast({
         title: "Login Successful",
         status: "success",

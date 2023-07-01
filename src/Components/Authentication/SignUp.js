@@ -6,7 +6,7 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+const BASE_URL  =process.env.REACT_APP_API_URL;
 const Signup = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -44,10 +44,10 @@ const Signup = () => {
 
       return;
     }
-    console.log(name, email, password, pic);
+    // console.log(name, email, password, pic);
     try {
       const data = await axios.post(
-        "http://localhost:5000/chatApp/user",
+        `${BASE_URL}/chatApp/user`,
         {
           name,
           email,
@@ -63,7 +63,7 @@ const Signup = () => {
           },
         }
       );
-      console.log(data.data);
+      // console.log(data.data);
       toast({
         title: "Registration Successful",
         status: "success",
@@ -99,7 +99,7 @@ const Signup = () => {
       });
       return;
     }
-    console.log(pics);
+    // console.log(pics);
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
@@ -112,11 +112,11 @@ const Signup = () => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
-          console.log(data.url.toString());
+          // console.log(data.url.toString());
           setPicLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setPicLoading(false);
         });
     } else {

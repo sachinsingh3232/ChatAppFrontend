@@ -10,8 +10,9 @@ import axios from 'axios';
 import ScrollableChat from "./ScrollableChat";
 import animationData from "../animations/typing.json"
 import Lottie, { } from "react-lottie"
-
 import io from "socket.io-client"
+const BASE_URL  =process.env.REACT_APP_API_URL;
+
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([])
@@ -45,7 +46,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 };
                 setNewMessage("");
                 const { data } = await axios.post(
-                    "http://localhost:5000/chatApp/message",
+                    `${BASE_URL}/chatApp/message`,
                     {
                         content: newMessage,
                         chatId: selectedChat._id,
@@ -81,7 +82,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             setLoading(true);
 
             const { data } = await axios.get(
-                `http://localhost:5000/chatApp/message/${selectedChat._id}`,
+                `${BASE_URL}/chatApp/message/${selectedChat._id}`,
                 config
             );
             // console.log(data)
@@ -101,7 +102,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         }
     };
     useEffect(() => {
-        socket = io("http://localhost:5000");
+        // console.log(BASE_URL)
+        socket = io(BASE_URL);
         socket.emit("setup", user);
         socket.on("connection", () => setSocketConnected(true));
         socket.on("typing", () => setIsTyping(true));

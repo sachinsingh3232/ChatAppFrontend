@@ -5,6 +5,7 @@ import UserBadgeItem from '../useAvatar/UserBadgeItem';
 import UserListItem from '../useAvatar/UserListItem';
 import { ViewIcon } from '@chakra-ui/icons';
 import axios from 'axios';
+const BASE_URL  =process.env.REACT_APP_API_URL;
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,8 +32,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     Authorization: `Bearer ${user.token}`,
                 },
             };
-            const { data } = await axios.get(`http://localhost:5000/chatApp/user?search=${search}`, config);
-            console.log(data);
+            const { data } = await axios.get(`${BASE_URL}/chatApp/user?search=${search}`, config);
+            // console.log(data);
             setLoading(false);
             setSearchResult(data);
         } catch (error) {
@@ -57,7 +58,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 },
             };
             const { data } = await axios.put(
-                `http://localhost:5000/chatApp/chat/rename`,
+                `${BASE_URL}/chatApp/chat/rename`,
                 {
                     chatId: selectedChat._id,
                     chatName: groupChatName,
@@ -65,7 +66,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 config
             );
 
-            console.log(data._id);
+            // console.log(data._id);
             // setSelectedChat("");
             setSelectedChat(data);
             setFetchAgain(!fetchAgain);
@@ -116,7 +117,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 },
             };
             const { data } = await axios.put(
-                `http://localhost:5000/chatApp/chat/groupadd`,
+                `${BASE_URL}/chatApp/chat/groupadd`,
                 {
                     chatId: selectedChat._id,
                     userId: user1._id,
@@ -161,7 +162,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 },
             };
             const { data } = await axios.put(
-                `http://localhost:5000/chatApp/chat/groupremove`,
+                `${BASE_URL}/chatApp/chat/groupremove`,
                 {
                     chatId: selectedChat._id,
                     userId: user1._id,

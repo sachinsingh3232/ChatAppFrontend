@@ -10,6 +10,7 @@ import UserListItem from '../useAvatar/UserListItem';
 import { getSender } from '../../Config/ChatLogics';
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge'
+const BASE_URL  =process.env.REACT_APP_API_URL;
 
 const SideDrawer = () => {
   const [search, setSearch] = useState();
@@ -49,7 +50,7 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.get(`http://localhost:5000/chatApp/user?search=${search}`, config);
+      const { data } = await axios.get(`${BASE_URL}/chatApp/user?search=${search}`, config);
 
       setLoading(false);
       setSearchResult(data);
@@ -65,7 +66,7 @@ const SideDrawer = () => {
     }
   };
   const accessChat = async (userId) => {
-    console.log(userId);
+    // console.log(userId);
 
     try {
       setLoadingChat(true);
@@ -75,7 +76,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`http://localhost:5000/chatApp/chat`, { userId }, config);
+      const { data } = await axios.post(`${BASE_URL}/chatApp/chat`, { userId }, config);
 
       if (!chats || !chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
